@@ -13,6 +13,10 @@ namespace Core.ApplicationService
 
         Pet AddPet(Pet pet);
 
-        void RemovePet(int id);
+        Pet RemovePet(int id);
+
+        Pet UpdatePer(Pet pet);
+
+        List<Pet> GetFilteredPets(Filter filter);
     }
 }

@@ -14,5 +14,11 @@ namespace Core.ApplicationService
         Owner AddOwner(Owner owner);
 
         Owner RemoveOwner(int id);
+
+        Owner updateOwner(Owner owner);
+
+        List<Owner> GetFilteredPets(Filter filter);
+
+
     }
 }

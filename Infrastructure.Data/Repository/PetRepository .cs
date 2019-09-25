@@ -23,5 +23,15 @@ namespace Infrastructure.Data.Repository
             pet.ID = FakeAsFuckDataBase.id++;
             return pet;
         }
+
+        public Pet RemovePet(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Pet UpdatePet(Pet pet)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

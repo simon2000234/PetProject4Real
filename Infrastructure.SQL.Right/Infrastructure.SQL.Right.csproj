@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="2.1.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core.ApplicationService.Impl\Core.ApplicationService.Impl.csproj" />
+    <ProjectReference Include="..\Core.ApplicationService\Core.ApplicationService.csproj" />
+    <ProjectReference Include="..\Core.DomainService\Core.DomainService.csproj" />
+    <ProjectReference Include="..\Core.Entities\Core.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

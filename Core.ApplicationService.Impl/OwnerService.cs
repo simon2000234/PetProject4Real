@@ -41,9 +41,21 @@ namespace Core.ApplicationService.Impl
 
         public Owner RemoveOwner(int id)
         {
+            return _ownerRepository.RemoveOwner(id);
+            /**
             Owner theOwner = GetOwner(id);
             _ownerRepository.GetAllOwners().Remove(theOwner);
-            return theOwner;
+            return theOwner;**/
+        }
+
+        public Owner updateOwner(Owner owner)
+        {
+            return _ownerRepository.UpdateOwner(owner);
+        }
+
+        public List<Owner> GetFilteredPets(Filter filter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -22,9 +22,17 @@ namespace PetApp.UI.RestAPI.Controllers
 
         // GET api/pets
         [HttpGet]
-        public ActionResult<IEnumerable<Pet>> Get()
+        public ActionResult<IEnumerable<Pet>> Get([FromQuery] Filter filter)
         {
-            return _petService.GetAllPets();
+            try
+            {
+                return _petService.GetFilteredPets(filter);
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // POST api/pets
@@ -58,23 +66,23 @@ namespace PetApp.UI.RestAPI.Controllers
 
         // PUT api/pets/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Pet pet)
+        public Pet Put(int id, [FromBody] Pet pet)
         {
-            Pet oldPet = _petService.GetPet(id);
-            oldPet.Type = pet.Type;
-            oldPet.BirthDate = pet.BirthDate;
-            oldPet.Color = pet.Color;
-            oldPet.Name = pet.Name;
-            oldPet.PreviousOwner = pet.PreviousOwner;
-            oldPet.Price = pet.Price;
-            oldPet.SoldDate = pet.SoldDate;
+            return _petService.UpdatePer(pet);
         }
 
         // DELETE api/pets/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult<Pet> Delete(int id)
         {
-            _petService.RemovePet(id);
+            try
+            {
+                return _petService.RemovePet(id);
+            }
+            catch (Exception e)
+            {
+                return BadRequest("No pet with that id");
+            }
         }
 
     }

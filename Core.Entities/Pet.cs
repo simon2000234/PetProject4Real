@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Core.Entities
 {
@@ -10,14 +11,7 @@ namespace Core.Entities
         public DateTime BirthDate { get; set; }
         public DateTime SoldDate { get; set; }
         public string Color { get; set; }
-        public Owner PreviousOwner { get; set; }
+        public List<PetOwner> PreviousOwners { get; set; }
         public double Price { get; set; }
-
-        public override string ToString()
-        {
-            return "The id is " + ID + " The name is " + Name + " it is a " + Type + " it was born on " + BirthDate.Date +
-                   " it was last sold on " + SoldDate.Date + " its color is " + Color + " its previous owner was " +
-                   PreviousOwner.Name + " and it cost " + Price;
-        }
     }
 }

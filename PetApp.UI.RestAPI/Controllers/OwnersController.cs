@@ -22,9 +22,9 @@ namespace PetApp.UI.RestAPI.Controllers
 
         // GET api/owners
         [HttpGet]
-        public ActionResult<IEnumerable<Owner>> Get()
+        public ActionResult<IEnumerable<Owner>> Get([FromQuery] Filter filter)
         {
-            return _ownerService.GetAllOwner();
+            return _ownerService.GetFilteredPets(filter);
         }
 
         // POST api/owners
@@ -57,10 +57,9 @@ namespace PetApp.UI.RestAPI.Controllers
 
         // PUT api/owners/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Owner owner)
+        public Owner Put(int id, [FromBody] Owner owner)
         {
-            Owner oldOwner = _ownerService.GetOwner(id);
-            oldOwner.Name = owner.Name;
+            return _ownerService.updateOwner(owner);
         }
 
         // DELETE api/owenrs/5
