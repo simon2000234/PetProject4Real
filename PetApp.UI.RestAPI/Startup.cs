@@ -43,6 +43,7 @@ namespace PetApp.UI.RestAPI
             services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IOwnerService, OwnerService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors();
 
             services.AddMvc().AddJsonOptions(opt =>
             {
@@ -78,6 +79,7 @@ namespace PetApp.UI.RestAPI
                 }
 
             app.UseHttpsRedirection();
+            app.UseCors(monkey => monkey.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseMvc();
         }
     }
