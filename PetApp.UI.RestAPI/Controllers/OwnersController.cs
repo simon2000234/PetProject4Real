@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.ApplicationService;
 using Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,9 +23,10 @@ namespace PetApp.UI.RestAPI.Controllers
 
         // GET api/owners
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public ActionResult<IEnumerable<Owner>> Get([FromQuery] Filter filter)
         {
-            return _ownerService.GetFilteredPets(filter);
+            return _ownerService.GetFilteredOwners(filter);
         }
 
         // POST api/owners

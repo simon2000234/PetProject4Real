@@ -36,6 +36,8 @@ namespace Infrastructure.SQL
                 HasOne(po => po.Pet).
                 WithMany(p => p.PreviousOwners).
                 HasForeignKey(po => po.PetId);
+
+            modelBuilder.Entity<User>().HasKey(u => u.Id);
         }
 
         public DbSet<Pet> Pets { get; set; }
@@ -43,6 +45,8 @@ namespace Infrastructure.SQL
         public DbSet<Owner> Owners { get; set; }
 
         public DbSet<PetOwner> PetsOwners { get; set; }
+
+        public DbSet<User> Users { get; set; }
 
     }
 }

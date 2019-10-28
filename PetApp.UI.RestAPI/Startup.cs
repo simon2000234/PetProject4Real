@@ -9,7 +9,9 @@ using Core.Entities;
 using Infrastructure.SQL;
 using Infrastructure.SQL.Repository;
 using Infrastructure.SQL.Right;
+using Infrastructure.SQL.Right.Helpers;
 using Infrastructure.SQL.Right.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -19,6 +21,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace PetApp.UI.RestAPI
@@ -38,12 +41,37 @@ namespace PetApp.UI.RestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Create a byte array with random values. This byte array is used
+            // to generate a key for signing JWT tokens.
+            Byte[] secretBytes = new byte[40];
+            Random rand = new Random();
+            rand.NextBytes(secretBytes);
+
+            // Add JWT based authentication
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    //ValidAudience = "TodoApiClient",
+                    ValidateIssuer = false,
+                    //ValidIssuer = "TodoApi",
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(secretBytes),
+                    ValidateLifetime = true, //validate the expiration and not before values in the token
+                    ClockSkew = TimeSpan.FromMinutes(10) //5 minute tolerance for the expiration date
+                };
+            });
+
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
             services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IOwnerService, OwnerService>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddSingleton<IAuthenticationHelper>(new AuthenticationHelper(secretBytes));
             services.AddCors();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddMvc().AddJsonOptions(opt =>
             {
@@ -80,6 +108,7 @@ namespace PetApp.UI.RestAPI
 
             app.UseHttpsRedirection();
             app.UseCors(monkey => monkey.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

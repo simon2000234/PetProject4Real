@@ -17,7 +17,7 @@ namespace Core.ApplicationService
 
         Owner updateOwner(Owner owner);
 
-        List<Owner> GetFilteredPets(Filter filter);
+        List<Owner> GetFilteredOwners(Filter filter);
 
 
     }

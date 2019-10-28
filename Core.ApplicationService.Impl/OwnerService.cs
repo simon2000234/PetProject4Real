@@ -53,9 +53,9 @@ namespace Core.ApplicationService.Impl
             return _ownerRepository.UpdateOwner(owner);
         }
 
-        public List<Owner> GetFilteredPets(Filter filter)
+        public List<Owner> GetFilteredOwners(Filter filter)
         {
-            throw new NotImplementedException();
+            return _ownerRepository.GetAllOwners(filter);
         }
     }
 }

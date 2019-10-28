@@ -19,7 +19,7 @@ namespace Infrastructure.SQL.Repository
 
         public List<Owner> GetAllOwners(Filter filter)
         {
-            if (filter == null)
+            if (filter.CurrentPage == 0 && filter.ItemsPrPage == 0)
             {
                 return _context.Owners.Include(o => o.OwnedPets).ThenInclude(o => o.Pet).ToList();
             }
